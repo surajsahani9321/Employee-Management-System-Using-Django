@@ -1,0 +1,84 @@
+{% extends 'Admin/base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-sm fixed-top  bg-primary">
+  <a class="navbar-brand text-light" href=" ">Suraj Sahani</a>
+  <ul class="navbar-nav">
+
+    <li class="nav-item">
+      <a class="nav-link  text-light" href=" ">EMPLOYEE MANAGEMENT SYSTEM</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light" href=" ">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link  text-light" href="{% url 'adddata'  %}">Admin</a>
+    </li>
+
+  </ul>
+</nav>
+<br>
+<br>
+<div class="container-fluid mt-5">
+      <h2 class="text-center alert alert-primary">EMPLOYEE MANAGEMENT SYSTEM</h2>
+<div class="container-fluid mt-1">
+   <div class="col-sm-12 ">
+           <h4 class="text-center text-primary">Employee Information</h4>
+        {% if emp %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Father Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">DOB</th>
+      <th scope="col">Department</th>
+      <th scope="col">Address</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for e in emp %}
+    <tr>
+      <th scope="row">{{e.id}}</th>
+      <td><img src="{{ e.image.url}}" alt="connect" style="max-height:100px"></td>
+      <td>{{e.name}}</td>
+      <td>{{e.fatherName}}</td>
+      <td>{{e.age}}</td>
+      <td>{{e.dob}}</td>
+      <td>{{e.department}}</td>
+      <td>{{e.address}}</td>
+      <td>{{e.phone}}</td>
+      <td>{{e.email}}</td>
+
+      <td>
+          <a href="{% url 'updatedata' e.id %}" class="btn btn-info btn-sm">Edit</a>
+          </td>
+        <td>
+          <form action="{% url 'deletedata' e.id %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+          </form>
+
+      </td>
+
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+        {% else %}
+        <h4>No Records</h4>
+        {% endif %}
+
+    </div>
+
+    </div>
+</div>
+{% endblock content %}
